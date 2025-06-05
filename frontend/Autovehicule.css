@@ -21,6 +21,7 @@ nav ul {
     gap: 15px;
     flex-wrap: wrap;
 }
+
 nav ul li a {
     color: white;
     text-decoration: none;
@@ -28,12 +29,6 @@ nav ul li a {
     padding: 8px 12px;
     border-radius: 5px;
     transition: background-color 0.3s;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 nav a.active,
@@ -47,7 +42,7 @@ nav a:hover {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .car-list-section h2 {
@@ -69,7 +64,7 @@ nav a:hover {
     width: 48%;
     height: auto;
     text-align: center;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
 }
 

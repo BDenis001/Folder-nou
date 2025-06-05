@@ -20,74 +20,93 @@
         </nav>
     </header>
 
-<main class="car-list-section">
-    <h2>Flota Noastră</h2>
-    <div class="car-grid">
-        <div class="car-box">
-            <img src="Photo/logan.png" alt="Dacia Logan">
-            <h3>Dacia Logan</h3>
-            <p>134.99€/zi</p>
-            <p>Motor: 1.0L Benzină, Manuală, 5 locuri, Consum: 5.8L/100km</p>
+    <main class="car-list-section">
+        <h2>Flota Noastră</h2>
+
+        <div id="admin-controls" style="text-align:right; margin-bottom:20px; display:none;">
+            <button onclick="openAddCarModal()">Adaugă Mașină</button>
         </div>
-        <div class="car-box">
-            <img src="Photo/gol.webp" alt="Volkswagen Golf">
-            <h3>Volkswagen Golf</h3>
-            <p>200.97€/zi</p>
-            <p>Motor: 1.5L TSI, Automată, 5 locuri, Consum: 6.2L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/bmw.png" alt="BMW Serie 3">
-            <h3>BMW Serie 3</h3>
-            <p>300.99€/zi</p>
-            <p>Motor: 2.0L Diesel, Automată, 5 locuri, Consum: 5.1L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/mercedes.avif" alt="Mercedes E-Class">
-            <h3>Mercedes E-class</h3>
-            <p>370.99€/zi</p>
-            <p>Motor: 2.0L Mild Hybrid, Automată, 5 locuri, Consum: 6.0L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/730d6a2c-f80b-11ef-a2c0-005056a37fde_3_4.png" alt="Skoda Superb">
-            <h3>Skoda Superb</h3>
-            <p>200.49€/zi</p>
-            <p>Motor: 2.0L TDI, Automată, 5 locuri, Consum: 4.9L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/a7sb2023.webp" alt="Audi A7">
-            <h3>Audi A7</h3>
-            <p>270.99€/zi</p>
-            <p>Motor: 3.0L V6 TDI, Automată, 5 locuri, Consum: 6.5L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/chiron-main.avif" alt="Bugatti Chiron">
-            <h3>Bugatti Chiron</h3>
-            <p>800.90€/zi</p>
-            <p>Motor: 8.0L W16 Quad-Turbo, Automată, 2 locuri, Consum: 22.5L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/Used-2016-Porsche-911-Carrera-4S-145K-MSRP!-1598886441.jpg" alt="Porsche 911">
-            <h3>Porche 911</h3>
-            <p>600.94€/zi</p>
-            <p>Motor: 3.0L Boxer, Automată, 4 locuri, Consum: 10.5L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/p90270892-highres-new-phantom-front-3.jpg" alt="Rolls-Royce Phantom">
-            <h3>Rolls-Royce Phantom</h3>
-            <p>780.77€/zi</p>
-            <p>Motor: 6.75L V12, Automată, 5 locuri, Consum: 15.0L/100km</p>
-        </div>
-        <div class="car-box">
-            <img src="Photo/12840-11.avif" alt="Rolls-Royce Ghost">
-            <h3>Rolls-Royce Ghost</h3>
-            <p>750.77€/zi</p>
-            <p>Motor: 6.6L V12, Automată, 5 locuri, Consum: 14.5L/100km</p>
-        </div>
-    </div>
-</main>
+
+        <div id="carContainer" class="car-grid"></div>
+    </main>
 
     <footer>
         <p>&copy; 2025 Chirie Automobile. Toate drepturile rezervate.</p>
     </footer>
+
+    <!-- Modal -->
+    <div id="addCarModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+        background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+        <div style="background:white; padding:20px; border-radius:10px; width:90%; max-width:500px;">
+            <h3>Adaugă Mașină</h3>
+            <form id="addCarForm">
+                <input type="text" name="nume" placeholder="Model" required><br><br>
+                <input type="text" name="pret" placeholder="Preț/zi (€)" required><br><br>
+                <input type="text" name="motor" placeholder="Detalii Motor" required><br><br>
+                <input type="text" name="imagine" placeholder="URL imagine" required><br><br>
+                <button type="submit">Salvează</button>
+                <button type="button" onclick="closeAddCarModal()">Anulează</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const isAdmin = true; // Setează pe false pentru utilizatori normali
+
+        window.onload = () => {
+            if (isAdmin) {
+                document.getElementById('admin-controls').style.display = 'block';
+            }
+            loadCars();
+        };
+
+        function openAddCarModal() {
+            document.getElementById('addCarModal').style.display = 'flex';
+        }
+
+        function closeAddCarModal() {
+            document.getElementById('addCarModal').style.display = 'none';
+        }
+
+        function loadCars() {
+            fetch('/api/cars')
+                .then(res => res.json())
+                .then(cars => {
+                    const container = document.getElementById('carContainer');
+                    container.innerHTML = '';
+                    cars.forEach(car => {
+                        container.innerHTML += `
+                        <div class="car-box">
+                            <img src="${car.imagine}" alt="${car.nume}">
+                            <h3>${car.nume}</h3>
+                            <p>${car.pret}€/zi</p>
+                            <p>${car.motor}</p>
+                        </div>`;
+                    });
+                });
+        }
+
+        document.getElementById('addCarForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('/api/cars', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                alert('Mașina a fost adăugată!');
+                closeAddCarModal();
+                loadCars();
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Eroare la salvare.');
+            });
+        });
+    </script>
 </body>
 </html>
