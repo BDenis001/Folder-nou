@@ -8,7 +8,7 @@ db.serialize(() => {
     model TEXT, 
     pretPZ REAL,
     detaliiMotor TEXT,
-    anul INTEGER, 
+    anul INTEGER
   )`);
 
   // Inserare corectă
@@ -29,18 +29,24 @@ db.serialize(() => {
     FOREIGN KEY (id_client) REFERENCES Clienti(id)
   )`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS User
+  db.run(`CREATE TABLE IF NOT EXISTS User(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nume TEXT,
     email TEXT,
     parola TEXT
-    `)
+  )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS Autentificare
+    db.run(`CREATE TABLE IF NOT EXISTS Autentificare(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT,
     parola TEXT
-    `)
+    )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS clieti(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT,
+    parola TEXT
+    )`);
     
 });
 
