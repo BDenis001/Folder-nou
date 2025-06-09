@@ -26,7 +26,7 @@ db.serialize(() => {
     data_inceput DATE,
     data_sfarsit DATE,
     FOREIGN KEY (id_masina) REFERENCES masini(id),
-    FOREIGN KEY (id_client) REFERENCES Clienti(id)
+    FOREIGN KEY (id_client) REFERENCES User(id)
   )`);
 
   db.run(`CREATE TABLE IF NOT EXISTS User(
@@ -36,18 +36,6 @@ db.serialize(() => {
     parola TEXT
   )`);
 
-    db.run(`CREATE TABLE IF NOT EXISTS Autentificare(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT,
-    parola TEXT
-    )`);
-
-    db.run(`CREATE TABLE IF NOT EXISTS clieti(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT,
-    parola TEXT
-    )`);
-    
 });
 
 db.close();

@@ -1,1 +1,1 @@
-https://bdenis001.github.io/Folder-nou
+https://github.com/MarinBtz1/practica.git
