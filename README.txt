@@ -1,1 +1,1 @@
-https://github.com/MarinBtz1/practica.git
+https://marinbtz1.github.io/practica/
